@@ -6,23 +6,12 @@ from tkinter.filedialog import askopenfilename
 from PIL import Image
 import matplotlib.pyplot as plt
 
-
-def file_open():
-    global file_path
-    file_path = askopenfilename(
-        initialdir='C:/', title='Select an Image File', filetypes=(("Image Files", "*.jpg *.png"), ("All Files", "*.*"))
-    )
-    if file_path:
-        windows.destroy()  # Close the Tkinter window immediately after file selection
-        return file_path
-    else:
-        print("No file selected. Exiting...")
-        exit()
-     
+   
+    # This function is important, don't delete  
 def nothing(x): 
     pass
 
-def greyScaleImage(file_path=None):
+def greyScaleImage(file_path=None, base_path=None):
     # Load Image 
     image = cv2.imread(file_path)
     if image is None:
@@ -31,10 +20,6 @@ def greyScaleImage(file_path=None):
     
     # Get the base name of the image (without extension)
     image_name = os.path.splitext(os.path.basename(file_path))[0]
-
-    # Define the base path for the final project !!!
-    # YOU DON'T NEED TO DO THIS! I did this because it was making a mess in my downloads 
-    base_path = '/Users/emanzaheer/Documents/ME396_ProjectFinal'
 
     # Create a subfolder named after the image within the base path
     output_folder = os.path.join(base_path, image_name)
@@ -145,23 +130,4 @@ def greyScaleImage(file_path=None):
         if k == 27:
             cv2.destroyAllWindows()
             break
-    
-if __name__ == '__main__':
-    # Initialize the main Tkinter window
-    windows = Tk()
-    windows.title("Upload an Image!")
-    windows.geometry("300x100")
-
-    # Add a button to open the file
-    open_button = Button(windows, text="Open Image File (png or jpg only)", command=file_open)
-    open_button.pack(pady=20)
-
-    # Start Tkinter mainloop
-    windows.mainloop()
-
-    # Ensure the file path is valid
-    if not file_path:
-        print("No file selected. Exiting...")
-        exit()
-
-    greyScaleImage(file_path)
+    return output_folder
