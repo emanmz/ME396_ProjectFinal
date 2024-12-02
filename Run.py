@@ -6,7 +6,8 @@ from tkinter.filedialog import askopenfilename
 from PIL import Image
 import matplotlib.pyplot as plt
 from OpenCVTest import greyScaleImage
- 
+from LayerToSTL import process_image_to_contours, createScad
+
 # Function to choose an image from the running computer's files! Returns the file path
 
 def file_open():
@@ -40,10 +41,20 @@ if __name__ == '__main__':
         print("No file selected. Exiting...")
         exit()
 
-    # Setting up where I want all my images to go
+    # Setting up where to store images and STL files
     base_path = '/Users/emanzaheer/Documents/ME396_ProjectFinal'
+
+    # 2. Convert image to grayscale and seperate them into layers. 
+    # Images are labeled Image_1.png.. Image_2.png representing layers in the st.
+    # 1 is the bottom, 2 is on top etc etc 
+    grayscale_folder = greyScaleImage(file_path, base_path)
+    print(f"Grayscale layers saved in: {grayscale_folder}")
     
-    # 2. Grey scale the images and seperate each greyscale into a black and white png
-    # These pngs are uploaded into a folder that is named after the original image
-    # The folder is within whatever base path you have chosen
-    greyScaleImage(file_path, base_path)
+    # 3. Process grayscale layers into contours
+    contour_folder = os.path.join(base_path, 'Contours')
+    process_image_to_contours(grayscale_folder, contour_folder)
+    
+    # 4. Generate 3D parts and combine into a single STL
+    stl_folder = os.path.join(base_path, 'STL_Files')
+    final_stl_path = createScad(contour_folder, stl_folder, height=5)
+    print(f"Final STL saved at: {final_stl_path}")

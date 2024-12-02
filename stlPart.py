@@ -4,6 +4,7 @@
 import numpy as np
 from stl import mesh
 import os
+import cv2
 
 def createScad(points, layerHeight, name):
     if name[-4:] == ".stl" or name[-4:] == ".STL":
@@ -25,12 +26,18 @@ def createScad(points, layerHeight, name):
         
         # Bottom Points
         for a in array:
-            p.append([a[0], a[1], height])
+            if len(a) >= 2:  # Ensure there are enough points to avoid IndexError
+                p.append([a[0], a[1], height])
+            else:
+                print(f"Skipping invalid point: {a}")
             
         # Top Points
         height += layerHeight
         for a in array:
-            p.append([a[0], a[1], height])
+            if len(a) >= 2:  # Ensure there are enough points to avoid IndexError
+                p.append([a[0], a[1], height])
+            else:
+                print(f"Skipping invalid point: {a}")
         
         count = len(array)
         
@@ -124,8 +131,21 @@ def merge_multiple_stl_files(stl_files, output_filename):
     # Save the merged mesh to an output STL file
     merged_mesh.save(output_filename)
     
+def process_image_to_contours(image_path):
+    img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+    if img is None:
+        raise FileNotFoundError(f"Image file '{image_path}' not found.")
 
-if __name__ == '__main__':
-    points = [[[-10, 0], [-5, 5], [5, 5], [10, 0], [5, -5], [-5, -5]], [[-5, 0], [-2.5, 2.5], [2.5, 2.5], [5, 0], [2.5, -2.5], [-2.5, -2.5]]]
-    layerHeight = 10.0
-    createScad(points, layerHeight, "HexagonsTest.stl")
+    # Threshold to ensure a binary black-and-white image
+    _, binary = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+
+    # Find contours of the white regions
+    contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    # Simplify contours and convert to a format suitable for STL generation
+    points = []
+    for contour in contours:
+        contour_points = contour[:, 0, :].tolist()  # Extract x, y coordinates
+        points.append(contour_points)
+
+    return points
