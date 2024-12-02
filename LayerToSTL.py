@@ -7,7 +7,7 @@ import numpy as np
 # Custom linear extrusion function
 def linear_extrude(vertices, height, steps=1):
     """
-    Custom linear extrude function to create a 3D model from a 2D polygon.
+    #Custom linear extrude function to create a 3D model from a 2D polygon.
 
     Args:
         vertices (list of tuple): List of (x, y) points defining the 2D polygon.
