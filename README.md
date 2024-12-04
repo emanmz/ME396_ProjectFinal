@@ -4,7 +4,7 @@
 
 ### Overview
 
-This Python project is a comprehensive tool for converting images into STL (3D model) files by converting images into grayscale layers, generating contours, and then into 3D models. It supports simplifying and visualizing 3D models, making it suitable for prototyping, 3D printing, and design visualization.
+This Python project is a tool for converting images into STL (3D model) files by converting images into grayscale layers, generating contours, and then into 3D models. It supports simplifying and visualizing 3D models, making it suitable for prototyping, 3D printing, and design visualization. This is intended to create tactile images for those with visual impairment to *feel* images.
 
 ### Features
 - Converts images to grayscale and separates them into multiple layers.
