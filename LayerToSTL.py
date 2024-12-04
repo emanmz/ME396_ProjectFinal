@@ -55,7 +55,7 @@ def generateContours(grayscale_folder, contour_folder):
         simplified_contours = []
         for contour in contours:
             # Approximate the contour to simplify it
-            epsilon = 0.002 * cv2.arcLength(contour, True)
+            epsilon = 0.0001 * cv2.arcLength(contour, True)
             simplified_contour = cv2.approxPolyDP(contour, epsilon, True)
             simplified_contours.append(simplified_contour)
 
@@ -66,7 +66,6 @@ def generateContours(grayscale_folder, contour_folder):
 
         # Draw filled contours on the image (color 255 means white)
         cv2.drawContours(contour_img, simplified_contours, -1, (255), thickness=cv2.FILLED)
-
         output_path = os.path.join(contour_folder, f"contour_{image_name}")
         cv2.imwrite(output_path, contour_img)
 
@@ -159,8 +158,8 @@ def createScad(grayscale_folder, contour_folder, stl_folder, height=20, base_thi
 
     stl_triangles = []
     base_size = None
-
-    for index, filename in enumerate(sorted(os.listdir(contour_folder))):
+    contour_files = sorted(os.listdir(contour_folder))    
+    for index, filename in enumerate(contour_files):
         file_path = os.path.join(contour_folder, filename)
         img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
         if img is None:

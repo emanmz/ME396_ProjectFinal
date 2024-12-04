@@ -99,7 +99,7 @@ if __name__ == '__main__':
     # Step 4: simplify the stl or not?
     simplify_or_no = askstring("Input", "Do you want to simplify the STL (recommended) (Y or N):")
     # Step 5: View the STL
-    if simplify_or_no == "Y":
+    if simplify_or_no == "Y" or "y" or "yes":
         simplified_file = os.path.join(stl_folder, f"{file_name}_simplified.stl")
         simplify_stl(stl_thing, simplified_file, reduction_factor=0.50)
         # # Load STL file
@@ -108,7 +108,7 @@ if __name__ == '__main__':
         plotter = pv.Plotter()
         plotter.add_mesh(mesh, color='lightblue')  # Add mesh with a color
         plotter.show()
-    elif simplify_or_no == "N":
+    elif simplify_or_no == "N" or "n" or "no":
         mesh = pv.read(stl_thing)
         # Create a plotter object and display the STL
         plotter = pv.Plotter()
