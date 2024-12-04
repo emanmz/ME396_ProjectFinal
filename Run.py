@@ -74,7 +74,7 @@ if __name__ == '__main__':
     """
     base_path = '/Users/emanz/Documents/ME396_ProjectFinal'
     
-    file_name = os.path.basename(file_path)
+    file_name =  os.path.splitext(os.path.basename(file_path))[0]
     grayscale_folder = os.path.join(base_path, 'Grayscale')
     contour_folder = os.path.join(base_path, 'Contours')
     delete_files_in_directory(contour_folder)
@@ -100,7 +100,8 @@ if __name__ == '__main__':
     simplify_or_no = askstring("Input", "Do you want to simplify the STL (recommended) (Y or N):")
     # Step 5: View the STL
     if simplify_or_no == "Y":
-        simplify_stl(stl_thing, f"{file_name}_simplified.stl", reduction_factor=0.25)
+        simplified_file = os.path.join(stl_folder, f"{file_name}_simplified.stl")
+        simplify_stl(stl_thing, simplified_file, reduction_factor=0.50)
         # # Load STL file
         mesh = pv.read(stl_thing)
         # Create a plotter object and display the STL
