@@ -141,7 +141,7 @@ def extrude_contour_to_base(points, z_start, z_end):
 
     return triangles
 
-def createScad(grayscale_folder, contour_folder, stl_folder, height=5):
+def createScad(grayscale_folder, contour_folder, stl_folder, height=20, base_thickness=100):
     """
     Generate a 3D model from grayscale images and save it as an STL file.
     Adds a base layer and ensures all layers connect to that base.
@@ -164,7 +164,7 @@ def createScad(grayscale_folder, contour_folder, stl_folder, height=5):
         file_path = os.path.join(contour_folder, filename)
         img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
         if img is None:
-            print(f"Skipping invalid or unreadable image: {file_path}")
+            #print(f"Skipping invalid or unreadable image: {file_path}")
             continue
 
         # Find contours from the filled image
@@ -176,17 +176,17 @@ def createScad(grayscale_folder, contour_folder, stl_folder, height=5):
         if index == 0:
             h, w = img.shape
             base_size = (w, h)
-            base_triangles = create_base_layer(w, h, 100)
+            base_triangles = create_base_layer(w, h, base_thickness)
             stl_triangles.extend(base_triangles)
 
         for contour in contours:
             points = [tuple(p[0]) for p in contour]
             if len(points) < 3:
-                print(f"Skipping invalid contour with insufficient points: {len(points)}")
+                #print(f"Skipping invalid contour with insufficient points: {len(points)}")
                 continue
 
-            z_start = (index * height) + 10
-            z_end = (index + 1) * height + 10
+            z_start = (index * height) + base_thickness
+            z_end = (index + 1) * height + base_thickness
             triangles = extrude_contour_to_base(points, z_start, z_end)
             stl_triangles.extend(triangles)
 
