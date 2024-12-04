@@ -54,7 +54,7 @@ if __name__ == '__main__':
         exit()
 
     # Set up base paths
-    base_path = '/Users/emanz/Documents/ME396_ProjectFinal'
+    base_path = '/Users/emanzaheer/Documents/ME396_ProjectFinal'
     file_name = os.path.basename(file_path)
     grayscale_folder = os.path.join(base_path, 'Grayscale')
     contour_folder = os.path.join(base_path, 'Contours')
@@ -67,9 +67,10 @@ if __name__ == '__main__':
     # Step 2: Convert Greyscale to Contours
     generateContours(output_folder, contour_folder)
     
-    stl_thing = createScad(output_folder, contour_folder, stl_folder, 2)
+    stl_thing = createScad(output_folder, contour_folder, stl_folder, 20)
+    
     simplify_stl(stl_thing, "simplified_model.stl", reduction_factor=0.3)
-   # Load STL file
+    # # Load STL file
     mesh = pv.read(stl_thing)
 
     # Create a plotter object and display the STL

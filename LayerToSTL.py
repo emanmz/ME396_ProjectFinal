@@ -12,10 +12,6 @@ from stl import mesh
 def save_to_stl(triangles, output_path):
     """
     Saves the generated triangles to an STL file.
-
-    Args:
-        triangles (list of tuple): List of 3D triangles.
-        output_path (str): Path to save the STL file.
     """
     # Convert triangles into numpy array format
     stl_data = np.zeros(len(triangles), dtype=mesh.Mesh.dtype)
@@ -63,7 +59,7 @@ def generateContours(grayscale_folder, contour_folder):
             simplified_contour = cv2.approxPolyDP(contour, epsilon, True)
             simplified_contours.append(simplified_contour)
 
-        print(f"{len(simplified_contours)} simplified contours detected in {image_name}")
+        # print(f"{len(simplified_contours)} simplified contours detected in {image_name}")
 
         # Create an empty black image with the same size as the input image
         contour_img = np.zeros_like(img)
@@ -180,7 +176,7 @@ def createScad(grayscale_folder, contour_folder, stl_folder, height=5):
         if index == 0:
             h, w = img.shape
             base_size = (w, h)
-            base_triangles = create_base_layer(w, h, 10)
+            base_triangles = create_base_layer(w, h, 100)
             stl_triangles.extend(base_triangles)
 
         for contour in contours:
