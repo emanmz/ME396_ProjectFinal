@@ -17,7 +17,7 @@ This Python project is a comprehensive tool for converting images into STL (3D m
 - Required libraries: OpenCV, NumPy, Pillow (PIL), Matplotlib, numpy-stl, PyVista, and Tkinter (built-in with Python).
 
 ### Installation
-The 'CheckYourLibraries.py' automatically installs missing dependencies. If required, install them manually using the following command:
+The **CheckYourLibraries.py** automatically installs missing dependencies. If required, install them manually using the following command:
 ```bash
 pip install opencv-python numpy Pillow matplotlib numpy-stl pyvista
 ```
@@ -25,7 +25,7 @@ pip install opencv-python numpy Pillow matplotlib numpy-stl pyvista
 ### How to Use
 
 1. **Image Selection**:
-   - Run the script 'Run.py'.
+   - Run the script **Run.py**.
    - A GUI window will prompt you to select an image file (`.png` or `.jpg`).
 
 2. **Image Processing**:
