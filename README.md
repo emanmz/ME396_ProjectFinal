@@ -1,6 +1,6 @@
 # README
 
-## 3D Model Generation and Visualization Tool
+## Tactile Image Generation: 2D Image -> 3D STL
 
 ### Overview
 
