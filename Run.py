@@ -72,7 +72,7 @@ if __name__ == '__main__':
     """
     CHANGE THE BELOW BASE PATH FOR WHEREVER YOU HAVE THIS REPOSITORY
     """
-    base_path = '/Users/emanz/Documents/ME396_ProjectFinal'
+    base_path = ''
     
     file_name =  os.path.splitext(os.path.basename(file_path))[0]
     grayscale_folder = os.path.join(base_path, 'Grayscale')
